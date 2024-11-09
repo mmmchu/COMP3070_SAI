@@ -1,4 +1,5 @@
 import re
+import os
 
 class Instance:
     def __init__(self):
@@ -9,7 +10,6 @@ class Instance:
         self.room_capacities = []
         self.exams_to_students = []
         self.student_exam_capacity = []
-
 
 def read_file(filename):
     def read_attribute(name, f):
