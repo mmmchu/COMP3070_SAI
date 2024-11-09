@@ -5,12 +5,14 @@ from constraints import solve  # Import solve from constraints.py
 import re
 import os
 
+
 # Natural sort helper function
 def natural_sort_key(s):
     """
     Helper function to generate a natural sorting key (i.e., handles numeric ordering in filenames).
     """
     return [int(text) if text.isdigit() else text.lower() for text in re.split('([0-9]+)', s)]
+
 
 # Start the timer
 start = timer()

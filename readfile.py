@@ -1,5 +1,5 @@
 import re
-import os
+
 
 class Instance:
     def __init__(self):
@@ -11,17 +11,18 @@ class Instance:
         self.exams_to_students = []
         self.student_exam_capacity = []
 
+
 def read_file(filename):
-    def read_attribute(name, f):
-        line = f.readline().strip()  # Strip to avoid extra spaces
-        if not line:
+    def read_attribute(name, x):
+        ls = x.readline().strip()  # Strip to avoid extra spaces
+        if not ls:
             raise Exception(f"Empty or unexpected line encountered while parsing {name}")
 
-        match = re.match(f'{name}:\\s*(\\d+)$', line)
+        match = re.match(f'{name}:\\s*(\\d+)$', ls)
         if match:
             return int(match.group(1))
         else:
-            raise Exception(f"Could not parse line '{line}'; expected the {name} attribute")
+            raise Exception(f"Could not parse line '{ls}'; expected the {name} attribute")
 
     instance = Instance()
     with open(filename) as f:
@@ -38,14 +39,14 @@ def read_file(filename):
 
             # Read the exam-to-student assignments
             while True:
-                l = f.readline().strip()
-                if not l:
+                line = f.readline().strip()
+                if not line:
                     break
-                m = re.match('^\\s*(\\d+)\\s+(\\d+)\\s*$', l)
+                m = re.match('^\\s*(\\d+)\\s+(\\d+)\\s*$', line)
                 if m:
                     instance.exams_to_students.append((int(m.group(1)), int(m.group(2))))
                 else:
-                    raise Exception(f'Failed to parse this line: {l}')
+                    raise Exception(f'Failed to parse this line: {line}')
 
             # Initialize an array for the number of exams
             for r in range(instance.number_of_exams):
