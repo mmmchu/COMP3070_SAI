@@ -18,6 +18,7 @@ def solve(instance):
 
     # Number of invigilators
     num_invigilators = 8
+    max_exams_per_invigilator = 2
 
     # Range functions
     Student_Range = Function('Student_Range', IntSort(), BoolSort())
@@ -134,9 +135,35 @@ def solve(instance):
                )
     )
 
+    # Constraint 6: A student can take at most two exams in a day.
+    s.add(
+        ForAll([student, ts],  # For each student and time slot
+               Implies(
+                   Student_Range(student),  # If the student is valid
+                   Sum([If(And(ExamTime(exam) == ts, ExamStudent(exam, student)), 1, 0)
+                        for exam in range(instance.number_of_exams)]) <= 2  # No more than 2 exams per day
+               )
+               )
+    )
+
+    # Constraint 7 : An invigilator can supervise at most 2 exams
+    s.add(
+        ForAll([invigilator],
+               Implies(
+                   Invigilator_Range(invigilator),  # If the invigilator is valid
+                   Sum([If(RoomInvigilator(room, ts) == invigilator, 1, 0)
+                        for room in range(instance.number_of_rooms)
+                        for ts in range(instance.number_of_slots)
+                        for exam in range(instance.number_of_exams)]) <= max_exams_per_invigilator
+                   # Limit the exams supervised by the invigilator
+               )
+               )
+    )
+
     # Check satisfiability and output results
     if s.check() == unsat:
         print('unsat')
+
     else:
         print('sat')
         for ex2 in range(instance.number_of_exams):

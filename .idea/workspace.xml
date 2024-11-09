@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="fixed printing order">
+    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="added fifth constraint">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constraints.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/readfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/readfile.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -129,13 +127,22 @@
       <option name="project" value="LOCAL" />
       <updated>1731137088941</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added fifth constraint">
+      <option name="closed" value="true" />
+      <created>1731158898640</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731158898640</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="initial push of files" />
     <MESSAGE value="refactor main.py into three files" />
     <MESSAGE value="fixed printing order" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed printing order" />
+    <MESSAGE value="added fifth constraint" />
+    <option name="LAST_COMMIT_MESSAGE" value="added fifth constraint" />
   </component>
 </project>
