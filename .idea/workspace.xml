@@ -4,9 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="added fifth constraint">
+    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="added 7th constraint">
+      <change beforePath="$PROJECT_DIR$/.idea/SAI CW 1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SAI CW 1.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constraints.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraints.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +54,8 @@
     &quot;Python.readfile.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/mabel/PycharmProjects/SAI CW 1/main.py&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mabel/PycharmProjects/FYP_tune&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -72,7 +76,6 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="SDK_NAME" value="Python 3.11 (Lab)" />
       <option name="WORKING_DIRECTORY" value="C:\Users\mabel\PycharmProjects\SAI CW 1" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -135,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731158898640</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added 7th constraint">
+      <option name="closed" value="true" />
+      <created>1731159879822</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731159879822</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -143,6 +154,7 @@
     <MESSAGE value="refactor main.py into three files" />
     <MESSAGE value="fixed printing order" />
     <MESSAGE value="added fifth constraint" />
-    <option name="LAST_COMMIT_MESSAGE" value="added fifth constraint" />
+    <MESSAGE value="added 7th constraint" />
+    <option name="LAST_COMMIT_MESSAGE" value="added 7th constraint" />
   </component>
 </project>

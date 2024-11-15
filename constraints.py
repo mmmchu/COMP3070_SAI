@@ -1,3 +1,4 @@
+
 from z3 import *
 
 def solve(instance):
@@ -11,7 +12,7 @@ def solve(instance):
     nts = Int('nts')
     student = Int('student')
     invigilator = Int('invigilator')  # Define invigilator as Int variable
-    other_room = Int('other_room')    # Define other_room as Int variable
+    other_room = Int('other_room')  # Define other_room as Int variable
 
     exam1 = Int('exam1')
     exam2 = Int('exam2')
@@ -32,7 +33,8 @@ def solve(instance):
     s.add(ForAll([exam], Exam_Range(exam) == And(exam >= 0, exam < instance.number_of_exams)))
     s.add(ForAll([ts], TimeSlot_Range(ts) == And(ts >= 0, ts < instance.number_of_slots)))
     s.add(ForAll([room], Room_Range(room) == And(room >= 0, room < instance.number_of_rooms)))
-    s.add(ForAll([invigilator], Invigilator_Range(invigilator) == And(invigilator >= 1, invigilator < num_invigilators)))
+    s.add(
+        ForAll([invigilator], Invigilator_Range(invigilator) == And(invigilator >= 1, invigilator < num_invigilators)))
 
     # Functions for assignments
     ExamRoom = Function('ExamRoom', IntSort(), IntSort())
@@ -111,7 +113,8 @@ def solve(instance):
         )
     )
 
-    # Constraint 5: Each room is assigned a unique invigilator per time slot
+    # Constraint 5: each room in a given time slot is assigned an invigilator,
+    # and that the same invigilator is not assigned to multiple rooms in the same time slot.
     s.add(
         ForAll([room, ts],  # For all rooms and time slots
                Implies(
@@ -146,19 +149,24 @@ def solve(instance):
                )
     )
 
-    # Constraint 7 : An invigilator can supervise at most 2 exams
+    '''
+    Constraint 7: An invigilator can supervise at most 2 exams
     s.add(
         ForAll([invigilator],
                Implies(
                    Invigilator_Range(invigilator),  # If the invigilator is valid
-                   Sum([If(RoomInvigilator(room, ts) == invigilator, 1, 0)
-                        for room in range(instance.number_of_rooms)
-                        for ts in range(instance.number_of_slots)
-                        for exam in range(instance.number_of_exams)]) <= max_exams_per_invigilator
-                   # Limit the exams supervised by the invigilator
+                   Sum(
+                       [If(
+                           And(ExamTime(exam) == ts, ExamRoom(exam) == room, RoomInvigilator(room, ts) == invigilator),
+                           1, 0)
+                           for exam in range(instance.number_of_exams)
+                           for room in range(instance.number_of_rooms)
+                           for ts in range(instance.number_of_slots)]
+                   ) <= max_exams_per_invigilator  # Limit the exams supervised by the invigilator
                )
-               )
+           )
     )
+    '''
 
     # Check satisfiability and output results
     if s.check() == unsat:
