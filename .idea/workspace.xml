@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="modify GUI and added constraints">
+    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="write into solutions.txt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Solutiondisplay.py" beforeDir="false" afterPath="$PROJECT_DIR$/solutiondisplay.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constraints.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sat_results.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/solutiondisplay.py" beforeDir="false" afterPath="$PROJECT_DIR$/solutiondisplay.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/solutions.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +153,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731685046930</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="write into solutions.txt">
+      <option name="closed" value="true" />
+      <created>1731765216000</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731765216000</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -164,6 +171,7 @@
     <MESSAGE value="added fifth constraint" />
     <MESSAGE value="added 7th constraint" />
     <MESSAGE value="modify GUI and added constraints" />
-    <option name="LAST_COMMIT_MESSAGE" value="modify GUI and added constraints" />
+    <MESSAGE value="write into solutions.txt" />
+    <option name="LAST_COMMIT_MESSAGE" value="write into solutions.txt" />
   </component>
 </project>

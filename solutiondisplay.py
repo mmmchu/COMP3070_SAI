@@ -102,9 +102,16 @@ def display_solution_for_selected_instance(instances_dir, file_var):
             instance = read_file(str(test_file_path))
             print(f"{selected_instance}: ", end="")
 
+            start = timer()  # Start timer
             # Call solve() once per file and store the result
             result = solve(instance)
+            end = timer()  # End timer
+
             print(result)  # Print the result returned by solve()
+
+            # Calculate and display elapsed time
+            elapsed_time = int((end - start) * 1000)  # Elapsed time in milliseconds
+            print(f"Elapsed time: {elapsed_time} milliseconds")
 
         except Exception as e:
             print(f"Failed to process {selected_instance}: {e}")
