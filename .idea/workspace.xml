@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="added 7th constraint">
-      <change beforePath="$PROJECT_DIR$/.idea/SAI CW 1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/SAI CW 1.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="d309f95c-3447-4cd0-a0f0-b018238e049e" name="Changes" comment="modify GUI and added constraints">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Solutiondisplay.py" beforeDir="false" afterPath="$PROJECT_DIR$/solutiondisplay.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constraints.py" beforeDir="false" afterPath="$PROJECT_DIR$/constraints.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sat_results.txt" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -146,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1731159879822</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="modify GUI and added constraints">
+      <option name="closed" value="true" />
+      <created>1731685046930</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731685046930</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -155,6 +163,7 @@
     <MESSAGE value="fixed printing order" />
     <MESSAGE value="added fifth constraint" />
     <MESSAGE value="added 7th constraint" />
-    <option name="LAST_COMMIT_MESSAGE" value="added 7th constraint" />
+    <MESSAGE value="modify GUI and added constraints" />
+    <option name="LAST_COMMIT_MESSAGE" value="modify GUI and added constraints" />
   </component>
 </project>

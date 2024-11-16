@@ -15,6 +15,26 @@ def natural_sort_key(s):
     return [int(text) if text.isdigit() else text.lower() for text in re.split('([0-9]+)', s)]
 
 
+# Function to write solutions to solutions.txt
+def write_solution_to_file(solution_text):
+    solutions_file = 'solutions.txt'
+
+    # Title to be added at the top of the file
+    title = "Exam Timetable Solutions\n"
+    separator = "――――――――――――――――――――――――\n"
+
+    # Check if the file exists, if not, create it and write the title
+    if not os.path.exists(solutions_file):
+        with open(solutions_file, 'w', encoding='utf-8') as f:
+            f.write(title)  # Write the title at the top
+            f.write(separator)  # Add a separator line after the title
+            f.write(solution_text)  # Write the actual solution text
+    else:
+        with open(solutions_file, 'a', encoding='utf-8') as f:
+            f.write(separator)  # Add a separator line to distinguish new entries
+            f.write(solution_text)  # Write the solution text
+
+
 # Display solutions for all instances in the specified format
 def on_display_constraint_details():
     # Create a new window for displaying constraint details
@@ -40,9 +60,11 @@ def on_display_constraint_details():
     6.A student can take at most two exams in a day.\n
     7.An invigilator can supervise at most 2 exams\n
     """
-    label = tk.Label(constraint_window, text=constraint_details, justify=tk.LEFT, font=("Helvetica",8))
+    label = tk.Label(constraint_window, text=constraint_details, justify=tk.LEFT, font=("Helvetica", 8))
     label.pack(padx=20, pady=20)
 
+
+# Display solutions for all instances in the specified format
 def display_all_solutions(instances_dir):
     start = timer()
     file_list = [f for f in os.listdir(instances_dir) if f.endswith('.txt')]
@@ -56,7 +78,12 @@ def display_all_solutions(instances_dir):
                 print(f"{test_file}: ", end="")
 
                 # Call solve() once per file and store the result
-                solve(instance)
+                result = solve(instance)
+                print(result)  # Print the result returned by solve()
+
+                # Write the result to solutions.txt
+                solution_text = f"{test_file}: {result}\n"
+                write_solution_to_file(solution_text)
 
             except Exception as e:
                 print(f"Failed to process {test_file}: {e}")
@@ -76,7 +103,8 @@ def display_solution_for_selected_instance(instances_dir, file_var):
             print(f"{selected_instance}: ", end="")
 
             # Call solve() once per file and store the result
-            solve(instance)
+            result = solve(instance)
+            print(result)  # Print the result returned by solve()
 
         except Exception as e:
             print(f"Failed to process {selected_instance}: {e}")

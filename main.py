@@ -5,17 +5,29 @@ from tkinter import messagebox
 from PIL import Image, ImageTk  # Import Pillow for image manipulation
 import customtkinter as ctk
 
-from Solutiondisplay import display_all_solutions, natural_sort_key, display_solution_for_selected_instance, \
+from solutiondisplay import display_all_solutions, natural_sort_key, display_solution_for_selected_instance, \
     on_display_constraint_details
 
 # Main GUI setup
 if __name__ == "__main__":
-    # Initialize the Tkinter root window
     root = tk.Tk()
     root.title("Exam Scheduling Solver")
 
     # Set the initial dimensions for the window
-    root.geometry("500x500")  # You can adjust this as per your design
+    window_width = 500
+    window_height = 500
+    root.geometry(f"{window_width}x{window_height}")  # You can adjust this as per your design
+
+    # Get the screen width and height
+    screen_width = root.winfo_screenwidth()
+    screen_height = root.winfo_screenheight()
+
+    # Calculate the position to place the window on the right side of the screen
+    x_position = screen_width - window_width  # Position the window at the far right
+    y_position = (screen_height - window_height) // 2  # Center vertically
+
+    # Set the position of the window
+    root.geometry(f"{window_width}x{window_height}+{x_position}+{y_position}")
 
     # Set the background color of the main window to white
     root.config(bg="white")
@@ -27,6 +39,8 @@ if __name__ == "__main__":
     file_var = tk.StringVar()
 
     def on_display_all_solutions():
+        # Show message box indicating loading
+        messagebox.showinfo("Loading", "Loading the solutions, please check the run terminal.")
         display_all_solutions(instances_dir)
 
     def on_display_solution_for_selected_instance():
@@ -49,9 +63,10 @@ if __name__ == "__main__":
             widget.destroy()
 
         # Add the logo to the top of the frame
-        logo_label = tk.Label(instance_window_frame, image=logo_photo, bg="white")
-        logo_label.image = logo_photo  # Keep a reference to avoid garbage collection
-        logo_label.pack(pady=10)
+        # noinspection PyTypeChecker
+        labellogo = tk.Label(instance_window_frame, image=logo_photo, bg="white")
+        labellogo.image = logo_photo  # Keep a reference to avoid garbage collection
+        labellogo.pack(pady=10)
 
         # Add dropdown menu for instance selection
         dropdown_label = ctk.CTkLabel(instance_window_frame, text="Select an Instance:", text_color="black",
@@ -98,11 +113,17 @@ if __name__ == "__main__":
     # Add logo above the label
     logo_image = Image.open("C:/Users/mabel/PycharmProjects/SAI CW 1/UON.png")  # Open the image using PIL
     logo_image = logo_image.resize((150, 50))  # Resize image to fit the UI (Adjust size as needed)
-    logo_photo = ImageTk.PhotoImage(logo_image)  # Convert the image to a format Tkinter can use
 
+    # Convert the image to a format Tkinter can use
+    logo_photo = ImageTk.PhotoImage(logo_image)
+
+    # Create a label for the logo, and ensure the reference to the image is stored in the label
+    # noinspection PyTypeChecker
     logo_label = tk.Label(main_menu_frame, image=logo_photo, bg="white")  # Create a label for the logo
     logo_label.image = logo_photo  # Keep a reference to the image to prevent garbage collection
-    logo_label.pack(pady=10)  # Place logo with padding
+
+    # Place the logo label with padding
+    logo_label.pack(pady=10)
 
     # Add welcome message above "Select an Option"
     welcome_label = ctk.CTkLabel(main_menu_frame,
