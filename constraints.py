@@ -2,34 +2,36 @@ from z3 import *
 
 
 def solve(instance):
-    s = Solver()
+    s = Solver()  # Create a Z3 solver instance
 
-    # Declarations
+    # Declare Z3 integer variables
     exam = Int('exam')
     room = Int('room')
-    ts = Int('ts')
-    nex = Int('nex')
-    nts = Int('nts')
-    student = Int('student')
-    invigilator = Int('invigilator')  # Define invigilator as Int variable
-    other_room = Int('other_room')  # Define other_room as Int variable
+    ts = Int('ts')  # Time slot
+    nex = Int('nex')  # Next exam
+    nts = Int('nts')  # Next time slot
+    student = Int('student')  # Student identifier
+    invigilator = Int('invigilator')  # Invigilator identifier
+    other_room = Int('other_room')  # Identifier for other rooms
+    ts1 = Int('ts1')  # First time slot
+    ts2 = Int('ts2')  # Second time slot
+    room1 = Int('room1')  # First room
+    room2 = Int('room2')  # Second room
+    exam1 = Int('exam1')  # First exam
+    exam2 = Int('exam2')  # Second exam
 
-    exam1 = Int('exam1')
+    # Define constants for invigilators and their maximum exams
+    num_invigilators = 8  # Total number of invigilators
+    max_exams_per_invigilator = 2  # Maximum exams supervised by an invigilator
 
-    exam2 = Int('exam2')
-
-    # Number of invigilators
-    num_invigilators = 8
-    max_exams_per_invigilator = 2
-
-    # Range functions
+    # Define range functions to specify valid ranges for various entities
     student_range = Function('student_range', IntSort(), BoolSort())
     exam_range = Function('exam_range', IntSort(), BoolSort())
     room_range = Function('room_range', IntSort(), BoolSort())
     time_slot_range = Function('time_slot_range', IntSort(), BoolSort())
     invigilator_range = Function('invigilator_range', IntSort(), BoolSort())
 
-    # Range constraints based on instance attributes
+    # Add constraints for the ranges of students, exams, rooms, and time slots
     s.add(ForAll([student], student_range(student) == And(student >= 0, student < instance.number_of_students)))
     s.add(ForAll([exam], exam_range(exam) == And(exam >= 0, exam < instance.number_of_exams)))
     s.add(ForAll([ts], time_slot_range(ts) == And(ts >= 0, ts < instance.number_of_slots)))
@@ -37,13 +39,14 @@ def solve(instance):
     s.add(
         ForAll([invigilator], invigilator_range(invigilator) == And(invigilator >= 1, invigilator < num_invigilators)))
 
-    # Functions for assignments
+    # Define functions for assigning exams to rooms and times
     examroom = Function('examroom', IntSort(), IntSort())
     exam_time = Function('exam_time', IntSort(), IntSort())
-    exam_student = Function('exam_student', IntSort(), IntSort(), BoolSort())
-    room_invigilator = Function('room_invigilator', IntSort(), IntSort(), IntSort())
+    exam_student = Function('exam_student', IntSort(), IntSort(), BoolSort())  # Map students to exams
+    room_invigilator = Function('room_invigilator', IntSort(), IntSort(),
+                                IntSort())  # Map invigilators to rooms and times
 
-    # Adding students to exams
+    # Add constraints to link students to their exams
     for etos in instance.exams_to_students:
         s.add(exam_student(etos[0], etos[1]))
 
@@ -65,6 +68,12 @@ def solve(instance):
     )
 
     # Constraint 2: There can be, at most, one exam timetabled in a room within a specific slot.
+    for ex2 in range(instance.number_of_exams):
+        for rm2 in range(instance.number_of_rooms):
+            s.add(Implies((examroom(ex2) == rm2), instance.student_exam_capacity[ex2]
+                          <= instance.room_capacities[rm2]))
+
+    # Constraint 3: The number of students taking an exam cannot exceed the capacity of the room.
     s.add(
         ForAll([room, ts],
                Implies(
@@ -82,11 +91,6 @@ def solve(instance):
                )
                )
     )
-
-    # Constraint 3: The number of students taking an exam cannot exceed the capacity of the room.
-    for ex2 in range(instance.number_of_exams):
-        for rm2 in range(instance.number_of_rooms):
-            s.add(Implies((examroom(ex2) == rm2), instance.student_exam_capacity[ex2] <= instance.room_capacities[rm2]))
 
     # Constraint 4: A student cannot take exams in consecutive time slots.
     s.add(
@@ -150,7 +154,7 @@ def solve(instance):
                )
     )
 
-    # Constraint 7: An invigilator can supervise at most 2 exams
+    # Constraint 7: An invigilator can supervise at most 3 exams
     s.add(
         ForAll([invigilator],
                Implies(
@@ -168,19 +172,77 @@ def solve(instance):
                )
     )
 
+    # Constraint 8: Minimum Breaks Between Supervision
+    # An invigilator must have at least one time slot gap between two exams they supervise.
+    s.add(
+        ForAll([invigilator, ts1, ts2],
+               Implies(
+                   And(
+                       invigilator_range(invigilator),  # Valid invigilator
+                       time_slot_range(ts1),  # Valid first time slot
+                       time_slot_range(ts2),  # Valid second time slot
+                       ts1 != ts2  # Time slots are not the same
+                   ),
+                   Implies(
+                       And(
+                           Exists([room1],  # Invigilator is assigned to a room in the first time slot
+                                  And(room_range(room1), room_invigilator(room1, ts1) == invigilator)),
+                           Exists([room2],  # Invigilator is assigned to a room in the second time slot
+                                  And(room_range(room2), room_invigilator(room2, ts2) == invigilator))
+                       ),
+                       Abs(ts1 - ts2) > 1  # Require at least one time slot gap
+                   )
+               )
+               )
+    )
+
     # Print "loading solutions..." before checking satisfiability
     print("loading...\n", end='', flush=True)
 
-    # Check satisfiability and output results
+    # Set to store unique solutions
+    unique_solutions = set()
+
+    # Initialize the solution count
+    solution_count = 0
+
+    # Maximum number of solutions to display
+    max_solutions = 3
+
     if s.check() == unsat:
         return 'UNSAT'
     else:
         result = 'SAT\n'
-        for ex2 in range(instance.number_of_exams):
-            room = s.model().eval(examroom(ex2))
-            slot = s.model().eval(exam_time(ex2))
-            invigilator = s.model().eval(room_invigilator(room, slot))
-            result += f"Exam: {ex2}  Room: {room}  Slot: {slot} Invigilator: {invigilator}\n"
+        while s.check() == sat and solution_count < max_solutions:
+            model = s.model()
+            solution = []
+            for ex2 in range(instance.number_of_exams):
+                room = model.eval(examroom(ex2))
+                slot = model.eval(exam_time(ex2))
+                invigilator = model.eval(room_invigilator(room, slot))
+                students = []  # List to store students taking this exam
 
-        result += "――――――――――――――――――――――――"
+                # Check which students are assigned to this exam
+                for student_id in range(instance.number_of_students):
+                    if model.eval(exam_student(ex2, student_id)):
+                        students.append(student_id)
+
+                # Append the details of the exam; convert students to a tuple
+                solution.append((ex2, room, slot, invigilator, tuple(students)))
+
+            solution_tuple = tuple(solution)  # Now this is a tuple of tuples and hashable
+
+            if solution_tuple not in unique_solutions:
+                unique_solutions.add(solution_tuple)
+
+                # Increment the solution count and label accordingly
+                solution_count += 1
+                result += f"\nSolution #{solution_count}:\n"
+
+                # Print the solution
+                for exam, room, slot, invigilator, students in solution:
+                    result += (f"Exam: {exam}  Room: {room}  Slot: {slot}  "
+                               f"Invigilator: {invigilator}  Students: {list(students)}\n")
+
+                result += "――――――――――――――――――――――――――――――――――――――――――――――――――――"
+
         return result
